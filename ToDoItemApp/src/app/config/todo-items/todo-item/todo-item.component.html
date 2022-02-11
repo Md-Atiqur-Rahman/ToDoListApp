@@ -1,0 +1,33 @@
+<div class="jumbotron py-3">
+  <h1 class="display-4 text-center">ToDo Item Register</h1>
+</div>
+
+<div class="row">
+  <div class="col-md-10" style="padding-left: 100px">
+    <table class="table">
+      <thead class="table-light">
+        <tr>
+          <th>Item Name</th>
+          <th>Item Description</th>
+          <th>Item Status</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pd of service.list">
+          <td (click)="populateForm(pd)">{{ pd.todoItemTypeName }}</td>
+          <td (click)="populateForm(pd)">{{ pd.todoItemContent }}</td>
+          <td (click)="populateForm(pd)">{{ pd.isCompleted }}</td>
+          <td>
+            <button
+              class="btn btn-sm btn-outline-danger"
+              (click)="onDelete(pd.todoItemId)"
+            >
+              X
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

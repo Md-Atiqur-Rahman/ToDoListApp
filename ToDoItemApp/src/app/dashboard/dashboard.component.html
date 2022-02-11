@@ -1,0 +1,31 @@
+<div class="jumbotron py-3">
+  <h1 class="display-4 text-center">Today's ToDoItems</h1>
+</div>
+
+<div class="row">
+  <div class="col-md-10" style="padding-left: 100px">
+    <table class="table">
+      <thead class="table-light">
+        <tr>
+          <th>Item Type</th>
+          <th>Item Description</th>
+          <th>Item Status</th>
+          <th>Reminder Date</th>
+          <th>Due Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pd of service.dashboardlist">
+          <td>{{ pd.todoItemTypeName }}</td>
+          <td>{{ pd.todoItemContent }}</td>
+          <td>
+            <span *ngIf="!pd.isCompleted">Not Completed</span>
+            <span *ngIf="pd.isCompleted">Completed</span>
+          </td>
+          <td>{{ pd.reminderDateTime | date: "medium" }}</td>
+          <td>{{ pd.dueDateTime | date: "medium" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

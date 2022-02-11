@@ -1,0 +1,144 @@
+<mat-card>
+  <mat-card-title>Register</mat-card-title>
+  <mat-card-content>
+    <form
+      novalidate
+      #registerForm="ngForm"
+      autocomplete="off"
+      *ngIf="!isSuccessful"
+    >
+      <p>
+        <mat-form-field>
+          <input
+            type="text"
+            matInput
+            placeholder="Username"
+            name="username"
+            #username="ngModel"
+            [(ngModel)]="service.registerData.username"
+            required
+          />
+          <div *ngIf="username.touched">
+            <p *ngIf="username.errors?.required">User name is required!</p>
+          </div>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field>
+          <input
+            type="text"
+            matInput
+            placeholder="Example@sakhile.com"
+            name="email"
+            #email="ngModel"
+            [(ngModel)]="service.registerData.email"
+            required
+            pattern="^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*@((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$"
+            [class.invalid]="email.invalid && email.touched"
+          />
+          <div *ngIf="email.touched">
+            <p *ngIf="email.errors?.required">Email is required!</p>
+            <p *ngIf="email.errors?.pattern">
+              You have entered an invalid email address!!!
+            </p>
+          </div>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field>
+          <input
+            type="text"
+            matInput
+            name="birthDate"
+            #birthDate="ngModel"
+            [matDatepicker]="picker"
+            placeholder="Date of Birth*"
+            [(ngModel)]="date"
+            required
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <span>
+            {{ date | date: "h:mm" }}
+          </span>
+          <div>
+            <button
+              cdkOverlayOrigin
+              #trigger="cdkOverlayOrigin"
+              (click)="isOpen = !isOpen"
+            >
+              time
+            </button>
+          </div>
+          <div *ngIf="birthDate.touched">
+            <p *ngIf="birthDate.errors?.required">Birth Date is required!</p>
+          </div>
+        </mat-form-field>
+
+        <ng-template
+          cdkConnectedOverlay
+          [cdkConnectedOverlayOrigin]="trigger"
+          [cdkConnectedOverlayOpen]="isOpen"
+          [cdkConnectedOverlayHasBackdrop]="true"
+          [cdkConnectedOverlayBackdropClass]="'backdrop'"
+          (backdropClick)="isOpen = false"
+        >
+          <app-time-picker
+            [date]="date"
+            (setDate)="onSetDate($event)"
+          ></app-time-picker>
+        </ng-template>
+      </p>
+      <p>
+        <mat-form-field>
+          <input
+            type="password"
+            matInput
+            placeholder="Password"
+            name="password"
+            #password="ngModel"
+            [(ngModel)]="service.registerData.password"
+            required
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+            [class.invalid]="password.invalid && password.touched"
+          />
+          <div *ngIf="password.touched">
+            <p *ngIf="password.errors?.required">Password is required!</p>
+            <p *ngIf="password.errors?.pattern">
+              Minimum eight characters, at least one uppercase letter, one
+              lowercase letter, one number and one special character
+            </p>
+          </div>
+        </mat-form-field>
+      </p>
+
+      <p *ngIf="error" class="error">
+        {{ error }}
+      </p>
+
+      <div class="button">
+        <button
+          type="button"
+          (click)="register(registerForm)"
+          mat-button
+          color="primary"
+        >
+          Register
+        </button>
+      </div>
+
+      <div class="alert alert-warning" *ngIf="!isLoggedIn">
+        already registered? <a href="/login" class="button">Login</a>
+      </div>
+    </form>
+    <div class="alert alert-success" *ngIf="isSuccessful">
+      Your registration is successful!
+      <div class="alert alert-success">
+        <a href="/login" class="button">Log In</a>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

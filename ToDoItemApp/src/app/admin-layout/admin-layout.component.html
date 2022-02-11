@@ -1,0 +1,72 @@
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+  <mat-toolbar color="primary" class="example-toolbar">
+    <button mat-icon-button (click)="snav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h1 class="example-app-name">To Do List Application</h1>
+    <span class="example-spacer"></span>
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="menu"
+      class="example-icon"
+      aria-label="Example icon-button with a menu"
+    >
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="LogOut()" *ngIf="isUserAuthenticated()">
+        <mat-icon>person</mat-icon>
+        <span>Log Out</span>
+      </button>
+      <button
+        mat-menu-item
+        [routerLink]="['/register']"
+        routerLinkActive="active"
+        *ngIf="!isUserAuthenticated()"
+      >
+        <mat-icon>person</mat-icon>
+        <span>Register</span>
+      </button>
+      <button mat-menu-item [routerLink]="['/login']" *ngIf="!isLoggedIn">
+        <mat-icon>person</mat-icon>
+        <span>Log In</span>
+      </button>
+    </mat-menu>
+  </mat-toolbar>
+
+  <mat-sidenav-container
+    class="example-sidenav-container"
+    [style.marginTop.px]="mobileQuery.matches ? 56 : 0"
+  >
+    <mat-sidenav
+      #snav
+      [mode]="mobileQuery.matches ? 'over' : 'side'"
+      [fixedInViewport]="mobileQuery.matches"
+      fixedTopGap="56"
+      style="background-color: #3f51b5; color: #fff"
+    >
+      <mat-nav-list>
+        <label style="font-size: 1.3em"
+          >&nbsp;&nbsp;&nbsp;&nbsp;{{ userName }}&nbsp;&nbsp;&nbsp;&nbsp;</label
+        >
+        <hr />
+        <app-menu-list-item
+          *ngFor="let item of navItems"
+          [item]="item"
+        ></app-menu-list-item>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content style="padding-left: 10px" *ngIf="isLoggedIn">
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  <mat-toolbar color="primary" class="example-toolbar" style="font-size: 0.7em">
+    <p>
+      <span
+        >Copyright 2018 Google Inc. All Rights Reserved. Use of this source code
+        is governed by an MIT-style license</span
+      >
+    </p>
+  </mat-toolbar>
+</div>

@@ -1,0 +1,235 @@
+<mat-card>
+  <mat-card-title>Add To Do List</mat-card-title>
+  <mat-card-content>
+    <div class="row">
+      <div class="col-md-12">
+        <form novalidate #form="ngForm" autocomplete="off">
+          <div class="row pl-20">
+            <div class="col-md-6">
+              <mat-form-field
+                appearance="fill"
+                style="width: 80%; padding-left: 5%"
+              >
+                <h5>Item Type</h5>
+                <mat-select
+                  (selectionChange)="onChangeType($event)"
+                  name="todoItemType"
+                  #todoItemType
+                  [(ngModel)]="service.todoData.todoItemType"
+                  [(value)]="selectedCountry"
+                >
+                  <mat-option
+                    *ngFor="let item of typeList"
+                    [value]="item.todoTypeId"
+                  >
+                    {{ item.typeName }}
+                  </mat-option>
+                </mat-select>
+                <!-- <div *ngIf="todoItemType.touched">
+              <p *ngIf="todoItemType.errors?.required">
+                Item Type name is required!
+              </p>
+            </div> -->
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field
+                style="width: 80%; padding-left: 5%; padding-top: 10px"
+              >
+                <h5>Item Description</h5>
+                <input
+                  type="text"
+                  matInput
+                  name="itemDescription"
+                  #itemDescription="ngModel"
+                  [(ngModel)]="service.todoData.todoItemContent"
+                  required
+                  maxlength="100"
+                  [class.invalid]="
+                    itemDescription.invalid && itemDescription.touched
+                  "
+                />
+                <div *ngIf="itemDescription.touched">
+                  <p *ngIf="itemDescription.errors?.required">
+                    Item description is required!
+                  </p>
+                </div>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6" *ngIf="service.todoData.todoItemType == 2">
+              <mat-form-field style="width: 80%; padding-left: 5%; float: left">
+                <h5>Reminder Date & Time</h5>
+                <input
+                  type="text"
+                  matInput
+                  name="reminderDateTime"
+                  #reminderDateTime="ngModel"
+                  [matDatepicker]="picker2"
+                  [(ngModel)]="service.reminderdate"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker2"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+                <span>
+                  {{ service.reminderdate | date: "h:mm" }}
+                </span>
+                <div>
+                  <button
+                    class="btn btn-light"
+                    cdkOverlayOrigin
+                    #trigger="cdkOverlayOrigin"
+                    (click)="isOpenRem = !isOpenRem"
+                  >
+                    time
+                  </button>
+                </div>
+              </mat-form-field>
+              <div style="width: 5%">
+                <ng-template
+                  cdkConnectedOverlay
+                  [cdkConnectedOverlayOrigin]="trigger"
+                  [cdkConnectedOverlayOpen]="isOpenRem"
+                  [cdkConnectedOverlayHasBackdrop]="true"
+                  [cdkConnectedOverlayBackdropClass]="'backdrop'"
+                  (backdropClick)="isOpenRem = false"
+                >
+                  <app-time-pickers
+                    [date]="service.reminderdate"
+                    (setDate)="onSetRemDate($event)"
+                  ></app-time-pickers>
+                </ng-template>
+              </div>
+            </div>
+            <div class="col-md-6" *ngIf="service.todoData.todoItemType == 3">
+              <mat-form-field
+                style="width: 80%; padding-left: 5%; padding-top: 37px"
+              >
+                <h5>Is Complete</h5>
+                <mat-select
+                  (selectionChange)="ChangeIsComplete($event.value)"
+                  name="isCompleted"
+                  #isCompleted
+                  [(ngModel)]="service.yesNoSelected"
+                  [(value)]="selectedYesNo"
+                >
+                  <mat-option
+                    *ngFor="let item of yesNoDropDown"
+                    [value]="item.key"
+                  >
+                    {{ item.value }}
+                  </mat-option>
+                </mat-select>
+                <div *ngIf="isCompleted.touched">
+                  <p *ngIf="isCompleted.errors?.required">required!</p>
+                </div>
+              </mat-form-field>
+            </div>
+            <div
+              class="col-md-6"
+              *ngIf="
+                service.todoData.todoItemType == 3 &&
+                service.yesNoSelected == 'N'
+              "
+            >
+              <mat-form-field style="width: 80%; padding-left: 5%">
+                <h5>DueDate Date & Time</h5>
+                <input
+                  type="text"
+                  matInput
+                  name="dueDateTime"
+                  #dueDateTime="ngModel"
+                  [matDatepicker]="picker1"
+                  [(ngModel)]="service.duedate"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker1"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+                <span>
+                  {{ service.duedate | date: "h:mm" }}
+                </span>
+                <div>
+                  <button
+                    class="btn btn-light"
+                    cdkOverlayOrigin
+                    #trigger="cdkOverlayOrigin"
+                    (click)="isOpen = !isOpen"
+                  >
+                    time
+                  </button>
+                </div>
+                <div *ngIf="dueDateTime.touched">
+                  <p *ngIf="dueDateTime.errors?.required">Date is required!</p>
+                </div>
+              </mat-form-field>
+
+              <ng-template
+                cdkConnectedOverlay
+                [cdkConnectedOverlayOrigin]="trigger"
+                [cdkConnectedOverlayOpen]="isOpen"
+                [cdkConnectedOverlayHasBackdrop]="true"
+                [cdkConnectedOverlayBackdropClass]="'backdrop'"
+                (backdropClick)="isOpen = false"
+              >
+                <app-time-pickers
+                  [date]="service.duedate"
+                  (setDate)="onSetDueDate($event)"
+                ></app-time-pickers>
+              </ng-template>
+            </div>
+          </div>
+          <div class="row pl-20" style="padding-top: 30px">
+            <div
+              class="form-group pl-20"
+              class="col-md-3"
+              *ngIf="service.todoData.todoItemId == 0"
+            >
+              <button
+                class="btn btn-info btn-lg btn-success"
+                type="button"
+                (click)="onSubmit(form)"
+                [disabled]="form.invalid"
+              >
+                Submit
+              </button>
+            </div>
+            <div
+              class="form-group pl-20"
+              class="col-md-3"
+              *ngIf="service.todoData.todoItemId > 0"
+            >
+              <button
+                class="btn btn-info btn-lg btn-danger"
+                type="button"
+                (click)="onSubmit(form)"
+                [disabled]="form.invalid"
+              >
+                Update
+              </button>
+            </div>
+            <div
+              class="form-group pl-20"
+              class="col-md-3"
+              *ngIf="service.todoData.todoItemId > 0"
+            >
+              <button
+                class="btn btn-info btn-lg btn-warning"
+                type="button"
+                (click)="resetForm(form)"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="col-md-12">
+        <app-todo-item></app-todo-item>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

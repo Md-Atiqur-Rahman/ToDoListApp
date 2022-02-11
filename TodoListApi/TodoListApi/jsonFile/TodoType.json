@@ -1,0 +1,18 @@
+[
+  {
+    "TodoTypeId":1,
+    "TypeName":"Regular"
+  },
+  {
+    "TodoTypeId":2,
+    "TypeName":"Reminder"
+  },
+  {
+    "TodoTypeId":3,
+    "TypeName":"Todo"
+  },
+  {
+    "TodoTypeId":4,
+    "TypeName":"Bookmark"
+  }
+]

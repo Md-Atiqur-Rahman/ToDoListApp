@@ -1,0 +1,11 @@
+[
+  {
+    "UserId": 1,
+    "UserName": "Himel",
+    "EMail": "Hi@gmail.com",
+    "DateOfBirth": "2022-01-31T18:00:00Z",
+    "Password": "Hi@12345",
+    "PasswordSalt": "rx08DLRd3tap77A2sdbVWrALDG3m3+zLwEITQsGVK9g=",
+    "HashPassword": "JWnB86oCj226uUQg9JkNFEOoqSs1El9Q/aRfdoVtqFk="
+  }
+]

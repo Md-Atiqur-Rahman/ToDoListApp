@@ -1,0 +1,68 @@
+<mat-card>
+  <mat-card-title>Login</mat-card-title>
+  <mat-card-content>
+    <form
+      novalidate
+      #loginForm="ngForm"
+      (submit)="login(loginForm)"
+      autocomplete="off"
+      *ngIf="!isLoggedIn"
+    >
+      <p>
+        <mat-form-field>
+          <input
+            type="text"
+            matInput
+            placeholder="Username"
+            name="username"
+            #username="ngModel"
+            [(ngModel)]="service.loginData.username"
+            required
+            [class.invalid]="username.invalid && username.touched"
+          />
+          <div *ngIf="username.touched">
+            <p *ngIf="username.errors?.required">Username is required!</p>
+          </div>
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field>
+          <input
+            type="password"
+            matInput
+            placeholder="Password"
+            name="password"
+            #password="ngModel"
+            [(ngModel)]="service.loginData.password"
+            required
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+            [class.invalid]="password.invalid && password.touched"
+          />
+          <div *ngIf="password.touched">
+            <p *ngIf="password.errors?.required">Password is required!</p>
+            <p *ngIf="password.errors?.pattern">
+              Minimum eight characters, at least one uppercase letter, one
+              lowercase letter, one number and one special character
+            </p>
+          </div>
+        </mat-form-field>
+      </p>
+
+      <div class="button">
+        <button
+          type="submit"
+          mat-button
+          color="primary"
+          [disabled]="loginForm.invalid"
+        >
+          Login
+        </button>
+      </div>
+
+      <div class="alert alert-warning" *ngIf="!isLoggedIn">
+        New user? <a href="/register" class="button">Register</a>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

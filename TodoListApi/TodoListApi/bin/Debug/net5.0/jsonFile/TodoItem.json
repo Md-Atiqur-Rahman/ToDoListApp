@@ -1,0 +1,32 @@
+[
+  {
+    "TodoItemId": 1,
+    "TodoItemType": 2,
+    "TodoItemContent": "Office early get up",
+    "TodoItemDate": "2022-02-11T19:06:38.827Z",
+    "UserName": "Himel",
+    "ReminderDateTime": "2022-02-12 07:00",
+    "DueDateTime": null,
+    "IsCompleted": false
+  },
+  {
+    "TodoItemId": 2,
+    "TodoItemType": 3,
+    "TodoItemContent": "Project publish on git hub",
+    "TodoItemDate": "2022-02-11T19:07:55.139Z",
+    "UserName": "Himel",
+    "ReminderDateTime": null,
+    "DueDateTime": "2022-02-12 08:00",
+    "IsCompleted": false
+  },
+  {
+    "TodoItemId": 3,
+    "TodoItemType": 1,
+    "TodoItemContent": "wwew",
+    "TodoItemDate": "2022-02-11T19:08:36.824Z",
+    "UserName": "Himel",
+    "ReminderDateTime": null,
+    "DueDateTime": null,
+    "IsCompleted": false
+  }
+]
